@@ -9,6 +9,11 @@ import java.io.FileNotFoundException;
 
 public class PlayHangman {
 
+    //PRE:  accepts scanner input from main
+    //POST: Reads words from an input file into the wordList
+    //      should loop while the player wants to play
+    //      selecting a random word from wordList & allowing the user
+    //      to guess letters to fill in the words (see assignment for more detail)
     public static void playHangman(Scanner input) {
         System.out.println("\nWELCOME TO HANGMAN!!\n");
         Random random = new Random();
