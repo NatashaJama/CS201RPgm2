@@ -1,4 +1,3 @@
-//import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -43,6 +42,45 @@ public class PlayHangman {
 
         while (keepPlaying) {
           
+            String word = wordList.get(random.nextInt(wordList.size()));
+
+            char[] guessWord = new char[word.length()];
+            Arrays.fill(guessWord, '_');
+
+            int guesses = 6;
+
+            while(guesses > 0){
+
+                System.out.println("Word: " + String.valueOf(guessWord));
+                System.out.print("Guess a letter: ");
+                char guess = input.next().charAt(0);
+
+                boolean found = false;
+
+                for(int i = 0; i < word.length(); i++){
+                    if(word.charAt(i) == guess){
+                        guessWord[i] = guess;
+                        found = true;
+                    }
+                }
+
+                if(!found){
+                    guesses--;
+                    System.out.println("Wrong! Guesses left: " + guesses);
+                }
+
+                if(String.valueOf(guessWord).equals(word)){
+                    System.out.println("You guessed it!");
+                    break;
+                }
+            }
+
+            System.out.print("Play again? (y/n): ");
+            char again = input.next().charAt(0);
+
+            if(again == 'n' || again == 'N'){
+                keepPlaying = false;
+            }
         }
 
         System.out.println("Thanks for playing Hangman!");

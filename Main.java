@@ -6,14 +6,27 @@ public class Main {
 
         System.out.println("\n\nWELCOME TO YOUR GAMES!!");
         Scanner scanInput = new Scanner(System.in);
-        char choice;
-        choice = menu(scanInput);
+        char choice = 'Z';
         
         while (choice != 'Q'){
-            //test for choice type and call appropriate Game
-            scanInput.nextLine();
+            
             choice = menu(scanInput);
-            choice = 'Q';
+
+            if(choice == '1'){
+                Games.lotteryGame(scanInput);
+            }
+            else if(choice == '2'){
+                Games.playCraps(scanInput);
+            }
+            else if(choice == '3'){
+                Games.playScraps(scanInput);
+            }
+            else if(choice == '6'){
+                PlayBlackjack.playBlackjack(scanInput);
+            }
+            else if(choice == '7'){
+                PlayHangman.playHangman(scanInput);
+            }
         }
 
         scanInput.close();
@@ -27,7 +40,21 @@ public class Main {
         //menu loop
         //   print menu
         //   get response & convert to upper case
+
+        System.out.println("\nChoose a game:");
+        System.out.println("1 - Lottery");
+        System.out.println("2 - Craps");
+        System.out.println("3 - Scraps");
+        System.out.println("6 - Blackjack");
+        System.out.println("7 - Hangman");
+        System.out.println("Q - Quit");
+
+        inputString = input.nextLine().toUpperCase();
  
+        if(inputString.length() > 0){
+            choice = inputString.charAt(0);
+        }
+
         return choice;
     }
 }

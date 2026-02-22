@@ -15,51 +15,103 @@ public class Games {
         Random rand = new Random();
 
         // Step 1: Generate a random two-digit lottery number (10 to 99)
-        //         && set the 2 digits of lottery number 
+        int lottery = rand.nextInt(90) + 10;
+        int lotteryDigit1 = lottery / 10;
+        int lotteryDigit2 = lottery % 10;
 
         // Step 2: Prompt the user to enter a two-digit number
- 
+        System.out.print("Enter a two digit number: ");
+        int userGuess = input.nextInt();
 
         // Step 3:Ensure it's a valid two-digit number
- 
+        while(userGuess < 10 || userGuess > 99){
+            System.out.print("Invalid. Enter a two digit number: ");
+            userGuess = input.nextInt();
+        }
+
         // Step 4: get the 2 digits of userGuess
+        int userDigit1 = userGuess / 10;
+        int userDigit2 = userGuess % 10;
 
         // Step 5: Display lottery number
- 
+        System.out.println("Lottery Number: " + lottery);
 
         // Step 6: Check for types of matches & print results
-        // exact match
- 
+        if(userGuess == lottery){
+            System.out.println("Exact match! You win $10,000!");
+        }
+
         // Step 7: Check for all digits match (in different order)
- 
+        else if(userDigit1 == lotteryDigit2 && userDigit2 == lotteryDigit1){
+            System.out.println("All digits match! You win $3,000!");
+        }
+
         // Step 8: Check for one digit match
- 
+        else if(userDigit1 == lotteryDigit1 || userDigit1 == lotteryDigit2
+             || userDigit2 == lotteryDigit1 || userDigit2 == lotteryDigit2){
+            System.out.println("One digit matches! You win $1,000!");
+        }
+
         // Step 9: No match
- 
-
+        else{
+            System.out.println("Sorry, no match.");
+        }
     }
-
-    //PRE:  accepts scanner from main
-    //POST: while the user chooses to play:
-    //      the user will place their bet & roll dice
-    //      the game will determine the outcome and update the bet
-    //      the user cannot play anymore if they are out of money
 
     public static void playCraps(Scanner input) {
         System.out.println("\nWELCOME TO CRAPS!!\n");
         double netWorth = 50;
+        Random rand = new Random();
+
+        while(netWorth > 0){
+            System.out.println("You have $" + netWorth);
+            System.out.print("Enter bet: ");
+            double bet = input.nextDouble();
+
+            while(bet > netWorth || bet <= 0){
+                System.out.print("Invalid bet. Enter again: ");
+                bet = input.nextDouble();
+            }
+
+            int sum = rollDice(rand);
+
+            if(sum == 7 || sum == 11){
+                System.out.println("You win!");
+                netWorth += bet;
+            }
+            else if(sum == 2 || sum == 3 || sum == 12){
+                System.out.println("You lose!");
+                netWorth -= bet;
+            }
+            else{
+                int point = sum;
+                System.out.println("Point is " + point);
+                boolean rolling = true;
+
+                while(rolling){
+                    sum = rollDice(rand);
+
+                    if(sum == point){
+                        System.out.println("You win!");
+                        netWorth += bet;
+                        rolling = false;
+                    }
+                    else if(sum == 7){
+                        System.out.println("You lose!");
+                        netWorth -= bet;
+                        rolling = false;
+                    }
+                }
+            }
+        }
           
         System.out.println("Thanks for playing! You ended with $" + netWorth);
-
     }
 
-    //Helper method
-    //PRE:  accept the random object rand
-    //POST: get 2 random values 1-6, print the die and return the sum
- 
     private static int rollDice(Random rand) {
-        int die1 = 0;
-        int die2 = 0;
+        int die1 = rand.nextInt(6) + 1;
+        int die2 = rand.nextInt(6) + 1;
+        System.out.println("You rolled: " + die1 + " and " + die2);
         return die1 + die2;
     }
 
@@ -70,12 +122,60 @@ public class Games {
         Random random = new Random();
         double worth = 50.00;
 
-        
+        while(worth > 0){
+
+            System.out.println("You have $" + worth);
+            System.out.print("Enter bet: ");
+            double bet = input.nextDouble();
+
+            while(bet > worth || bet <= 0){
+                System.out.print("Invalid bet. Enter again: ");
+                bet = input.nextDouble();
+            }
+
+            int d1 = random.nextInt(8) + 1;
+            int d2 = random.nextInt(8) + 1;
+            int d3 = random.nextInt(8) + 1;
+
+            int sum = d1 + d2 + d3;
+
+            System.out.println("Rolled: " + d1 + " " + d2 + " " + d3);
+
+            if(d1 == 8 || d2 == 8 || d3 == 8 || sum == 9 || sum == 10 || sum == 14){
+                System.out.println("You win!");
+                worth += bet;
+            }
+            else if(d1 == 1 || d2 == 1 || d3 == 1 || sum == 8 || sum == 20 || sum == 23 || sum == 24){
+                System.out.println("You lose!");
+                worth -= bet;
+            }
+            else{
+                int point = sum;
+                boolean rolling = true;
+
+                while(rolling){
+                    d1 = random.nextInt(8) + 1;
+                    d2 = random.nextInt(8) + 1;
+                    d3 = random.nextInt(8) + 1;
+                    sum = d1 + d2 + d3;
+
+                    if(sum == point){
+                        System.out.println("You win!");
+                        worth += bet;
+                        rolling = false;
+                    }
+                    else if(d1 == 8 || d2 == 8 || d3 == 8 || sum == 15){
+                        System.out.println("You lose!");
+                        worth -= bet;
+                        rolling = false;
+                    }
+                }
+            }
+        }
 
         System.out.println("Thanks for playing! You ended with $" + worth);
     }
-    
-
 }
+
  
 
